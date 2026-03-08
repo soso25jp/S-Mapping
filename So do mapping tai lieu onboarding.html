@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sơ đồ mapping tài liệu onboarding - bản chỉnh sửa tự lưu</title>
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #cbd5e1;
+      --accent: #2563eb;
+      --accent-2: #0f766e;
+      --warn: #b45309;
+      --shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #f8fbff 0%, #f6f8fb 100%);
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 18px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .topbar-right {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .status {
+      font-size: 13px;
+      color: #334155;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      padding: 8px 12px;
+      border-radius: 999px;
+    }
+
+    button {
+      border: 1px solid #d1d5db;
+      background: #fff;
+      color: #111827;
+      padding: 9px 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:hover { background: #f8fafc; }
+
+    .primary {
+      background: #2563eb;
+      color: white;
+      border-color: #2563eb;
+    }
+
+    .primary:hover { background: #1d4ed8; }
+
+    .wrap {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #dbeafe 0%, #ecfeff 100%);
+      border: 1px solid #bfdbfe;
+      border-radius: 24px;
+      padding: 24px 28px;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 32px;
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: #334155;
+      font-size: 16px;
+      line-height: 1.6;
+      max-width: 1100px;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      background: #fff;
+      border: 1px solid #dbeafe;
+      color: #1e3a8a;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .col {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      position: relative;
+    }
+
+    .col-title {
+      position: sticky;
+      top: 68px;
+      z-index: 2;
+      background: rgba(246, 248, 251, 0.96);
+      backdrop-filter: blur(8px);
+      padding: 10px 0;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid #e5e7eb;
+      border-radius: var(--radius);
+      padding: 16px 16px 14px;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
+      line-height: 1.35;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 5px 10px;
+      margin-bottom: 10px;
+      color: white;
+    }
+
+    .overview { background: var(--accent); }
+    .data { background: var(--accent-2); }
+    .ik { background: #7c3aed; }
+    .ir { background: #db2777; }
+    .batch { background: #ea580c; }
+
+    .meta {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .file {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin: 8px 0;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .file strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #0f172a;
+    }
+
+    .arrow-box {
+      background: #eff6ff;
+      border: 1px dashed #93c5fd;
+      border-radius: 16px;
+      padding: 14px 16px;
+      font-weight: 700;
+      color: #1d4ed8;
+      text-align: center;
+    }
+
+    .tip {
+      font-size: 13px;
+      line-height: 1.55;
+      color: #334155;
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin-top: 8px;
+    }
+
+    .footer {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .mini {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .mini h4 {
+      margin: 0 0 10px;
+      font-size: 16px;
+    }
+
+    .mini ul {
+      margin: 0;
+      padding-left: 18px;
+      line-height: 1.7;
+      color: #334155;
+      font-size: 14px;
+    }
+
+    .connector {
+      height: 24px;
+      width: 2px;
+      background: var(--line);
+      margin: 0 auto;
+      border-radius: 99px;
+    }
+
+    [data-editable="true" contenteditable="false"] {
+      outline: none;
+      transition: box-shadow 0.2s ease, background 0.2s ease;
+      border-radius: 8px;
+    }
+
+    [data-editable="true" contenteditable="false"]:focus {
+      background: #fffef0;
+      box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.25);
+    }
+
+
+    .editable-on [data-editable="true"] {
+      cursor: text;
+    }
+
+    #toggleEditBtn.active {
+      background: #dbeafe;
+      border-color: #93c5fd;
+      color: #1d4ed8;
+    }
+
+    [contenteditable="false"] {
+      cursor: default;
+    }
+
+    @media print {
+      .topbar { display: none; }
+      .col-title { position: static; }
+      body { background: white; }
+      .wrap { max-width: none; padding: 10px; }
+      .card, .hero, .mini { box-shadow: none; }
+    }
+
+    @media (max-width: 1200px) {
+      .flow { grid-template-columns: 1fr 1fr; }
+      .footer { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 760px) {
+      .wrap { padding: 16px; }
+      .flow { grid-template-columns: 1fr; }
+      h1 { font-size: 26px; }
+      .topbar { padding: 10px 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-left">
+      <button id="toggleEditBtn" aria-pressed="false">Bật chỉnh sửa</button>
+      <div class="status" id="modeLabel">Chế độ xem</div>
+    </div>
+    <div class="topbar-right">
+      <button onclick="window.print()">In / Xuất PDF</button>
+    </div>
+  </div>
+
+  <div class="wrap" id="editableRoot">
+    <section class="hero">
+      <h1 data-editable="true" contenteditable="false">Sơ đồ mapping tài liệu onboarding cho member mới</h1>
+      <p class="subtitle" data-editable="true" contenteditable="false">
+        Mục tiêu của sơ đồ này là giúp người mới hiểu nhanh cách đọc bộ tài liệu IDアカウント管理 trong bối cảnh 会員基盤刷新.
+        Luồng đọc khuyến nghị là: <strong>Hiểu tổng thể → Hiểu dữ liệu/trạng thái → Chọn nhánh phụ trách (IK / IR / Batch)</strong>.
+      </p>
+      <div class="legend">
+        <span class="pill" data-editable="true" contenteditable="false">Tài liệu nền tảng</span>
+        <span class="pill" data-editable="true" contenteditable="false">Dữ liệu & trạng thái</span>
+        <span class="pill" data-editable="true" contenteditable="false">IK = Master side</span>
+        <span class="pill" data-editable="true" contenteditable="false">IR = Replica side</span>
+        <span class="pill" data-editable="true" contenteditable="false">Batch/Command = xử lý + vận hành</span>
+      </div>
+    </section>
+
+    <section class="flow">
+      <div class="col">
+        <div class="col-title" data-editable="true" contenteditable="false">1. Đọc để hiểu tổng thể</div>
+
+        <div class="card">
+          <span class="badge overview" data-editable="true" contenteditable="false">Bắt đầu từ đây</span>
+          <h3 data-editable="true" contenteditable="false">Overview / Kiến trúc tổng thể</h3>
+          <div class="meta" data-editable="true" contenteditable="false">Mục tiêu: hiểu dự án đang thay đổi gì và phạm vi nằm ở đâu</div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>トリガ7330（会員基盤刷新）IDアカウント管理編01_概要.pptx</strong>
+            Tài liệu nên đọc đầu tiên để nắm bối cảnh, mục tiêu, phạm vi thay đổi.
+          </div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>27v1long-トリガxxx-方式設計書(会員基盤刷新)_1.0版_20260226提示.xlsm</strong>
+            Tài liệu thiết kế phương thức tổng thể. Dùng để hiểu hướng tiếp cận và cấu trúc chính của giải pháp.
+          </div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>機能変更対応マトリクス（担当会社プロットVer）.xlsx</strong>
+            Ma trận thay đổi chức năng và phân bổ scope/phụ trách.
+          </div>
+        </div>
+
+        <div class="connector"></div>
+
+        <div class="card">
+          <span class="badge data" data-editable="true" contenteditable="false">Sau overview</span>
+          <h3 data-editable="true" contenteditable="false">Hiểu dữ liệu và trạng thái trước khi đi sâu</h3>
+          <div class="meta" data-editable="true" contenteditable="false">Mục tiêu: nắm DB, trạng thái account và nơi dữ liệu được create/read/update/delete</div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>L2900_0400DB仕様IDアカウント管理(IK).xlsx</strong>
+            DB specification cho phía IK / Master.
+          </div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>L2900_0400DB仕様IDアカウント管理(IR).xlsx</strong>
+            DB specification cho phía IR / Replica.
+          </div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>R-7204010...DBカラム状態遷移.xlsx</strong>
+            Xem trạng thái cột DB thay đổi thế nào theo từng xử lý.
+          </div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>R-7204008...CRUD表.xls</strong>
+            Xác định chức năng nào create/read/update/delete dữ liệu nào.
+          </div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>Q5900_0400部品IKIR(マスタレプリカ共通)..._アカウント状態整理.xlsx</strong>
+            Tài liệu chuẩn hóa trạng thái account dùng chung cho Master / Replica.
+          </div>
+          <div class="tip" data-editable="true" contenteditable="false">
+            Người mới rất dễ đọc luôn function detail. Cách đúng là phải hiểu phần <strong>DB + state + CRUD</strong> trước, nếu không sẽ rất khó theo dõi logic.
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="col-title" data-editable="true" contenteditable="false">2. Nhánh IK (Master)</div>
+
+        <div class="card">
+          <span class="badge ik" data-editable="true" contenteditable="false">IK core</span>
+          <h3 data-editable="true" contenteditable="false">Interface và message phía Master</h3>
+          <div class="meta" data-editable="true" contenteditable="false">Dùng khi cần hiểu input/output và dữ liệu nội bộ phía Master</div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>Q5900_0400部品IK(インタフェース仕様)(新CiRCUS).xls</strong>
+            Interface specification của IK.
+          </div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>O-110000_0400電文IDアカウント管理(Master)(新CiRCUS).xlsx</strong>
+            Định nghĩa message / điện văn phía Master.
+          </div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>Q5906_0400部品IK(インタフェース仕様別紙_マクロ指定方法)(新CiRCUS).xlsx</strong>
+            Rule macro, chỉ định field, mapping hỗ trợ interface.
+          </div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>R-7206001_0400構造IDアカウント管理(内部電文(Master))(新CiRCUS).xlsx</strong>
+            Cấu trúc internal message phía Master.
+          </div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>Q5900_0400部品IKIR(マスタレプリカ共通)(新CiRCUS).xlsx</strong>
+            Phần common giữa IK và IR.
+          </div>
+        </div>
+
+        <div class="connector"></div>
+
+        <div class="card">
+          <span class="badge ik" data-editable="true" contenteditable="false">IK setting</span>
+          <h3 data-editable="true" contenteditable="false">SG管理シート của Master</h3>
+          <div class="meta" data-editable="true" contenteditable="false">Dùng khi cần check setting hoặc khác biệt môi trường</div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>F08103_01_SG管理シート(IDアカウント管理(Master))_01</strong>
+            Setting trước production switch.
+          </div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>F08103_01_SG管理シート(IDアカウント管理(Master))_02</strong>
+            Setting sau production switch.
+          </div>
+          <div class="tip" data-editable="true" contenteditable="false">
+            Hai file <strong>_01</strong> và <strong>_02</strong> không phải bản trùng nhau. Chúng phản ánh cấu hình ở hai phase khác nhau trước/sau 本番化スイッチ.
+          </div>
+        </div>
+
+        <div class="connector"></div>
+
+        <div class="arrow-box" data-editable="true" contenteditable="false">Khi làm Master side: đọc IK core → SG setting → function detail IK nếu có ticket cụ thể</div>
+      </div>
+
+      <div class="col">
+        <div class="col-title" data-editable="true" contenteditable="false">3. Nhánh IR (Replica)</div>
+
+        <div class="card">
+          <span class="badge ir" data-editable="true" contenteditable="false">IR core</span>
+          <h3 data-editable="true" contenteditable="false">Interface và message phía Replica</h3>
+          <div class="meta" data-editable="true" contenteditable="false">Dùng khi cần hiểu luồng tham chiếu / replica</div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>Q5903_0400部品IR(インタフェース仕様)(新CiRCUS).xlsx</strong>
+            Interface specification phía IR.
+          </div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>Q5904_0400部品IR(インタフェース仕様別紙_マクロ指定方法)(新CiRCUS).xlsx</strong>
+            Macro specification của IR.
+          </div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>R-7206002_0400構造IDアカウント管理(内部電文(Replica))(新CiRCUS).xls</strong>
+            Internal message phía Replica.
+          </div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>Q5900_0400部品IKIR(マスタレプリカ共通)(新CiRCUS).xlsx</strong>
+            Tài liệu common giữa IK và IR.
+          </div>
+        </div>
+
+        <div class="connector"></div>
+
+        <div class="card">
+          <span class="badge ir" data-editable="true" contenteditable="false">IR setting</span>
+          <h3 data-editable="true" contenteditable="false">SG管理シート của Replica</h3>
+          <div class="meta" data-editable="true" contenteditable="false">Dùng khi cần đối chiếu setting phía IR</div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>F08103_02_SG管理シート(IDアカウント管理(Replica))(新CiRCUS).xls</strong>
+            Tài liệu cấu hình SG cho Replica.
+          </div>
+          <div class="tip" data-editable="true" contenteditable="false">
+            Khi gặp câu hỏi liên quan Replica, nên đối chiếu song song với tài liệu common và DB仕様 IR để tránh hiểu nhầm logic từ phía Master.
+          </div>
+        </div>
+
+        <div class="connector"></div>
+
+        <div class="arrow-box" data-editable="true" contenteditable="false">Khi làm Replica side: đọc IR core → SG setting IR → function detail IR nếu có case cụ thể</div>
+      </div>
+
+      <div class="col">
+        <div class="col-title" data-editable="true" contenteditable="false">4. Nhánh Batch / Command / Ops</div>
+
+        <div class="card">
+          <span class="badge batch" data-editable="true" contenteditable="false">Batch foundation</span>
+          <h3 data-editable="true" contenteditable="false">Tài liệu đầu vào cho batch / command</h3>
+          <div class="meta" data-editable="true" contenteditable="false">Dùng khi cần hiểu luồng file, command, batch job và vận hành</div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>M4200_0400FLIDアカウント管理(Master)(新CiRCUS).doc</strong>
+            Tài liệu flow/chức năng cấp batch-command cho Master.
+          </div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>R-7207002_0400構造IDアカウント管理(ファイル設計(Master))(新CiRCUS).docx</strong>
+            File design: format file vào/ra, xử lý file của batch.
+          </div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>R-7203001_0400構造IDアカウント管理(コンポーネント実装設計).docx</strong>
+            Thiết kế implement component.
+          </div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>R-7203002_0400構造IDアカウント管理(別紙-コンポーネント実装設計).xlsx</strong>
+            Phụ lục implement component.
+          </div>
+        </div>
+
+        <div class="connector"></div>
+
+        <div class="card">
+          <span class="badge batch" data-editable="true" contenteditable="false">Function detail</span>
+          <h3 data-editable="true" contenteditable="false">Chi tiết xử lý theo mã nghiệp vụ</h3>
+          <div class="meta" data-editable="true" contenteditable="false">Dùng khi cần phân tích logic sâu hoặc impact analysis</div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>IK group</strong>
+            SO系: IK009, IK010, IK015<br />
+            移動機系: IK503, IK506, IK507, IK508, IK509, IK510, IK511, IK513, IK516, IK517, IK518, IK519
+          </div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>IR group</strong>
+            IR006, IR012, IR013, IR014, IR015, IR016
+          </div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>処理パターンマトリクス</strong>
+            IK: R-7204007...<br />
+            IR: R-7204103...
+          </div>
+        </div>
+
+        <div class="connector"></div>
+
+        <div class="card">
+          <span class="badge batch" data-editable="true" contenteditable="false">Ops & Monitoring</span>
+          <h3 data-editable="true" contenteditable="false">Vận hành, FTP và monitoring</h3>
+          <div class="meta" data-editable="true" contenteditable="false">Dùng cho support, operation handover và điều tra lỗi vận hành</div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>R-7204004...(Master-MMPF-FTP処理).docx</strong>
+            Tài liệu FTP / transfer file.
+          </div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>R-7204004...(Master-バッチ処理).doc</strong>
+            Tài liệu batch processing.
+          </div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>R-7204012...(別紙_運用監視機能).xls</strong>
+            Chi tiết monitoring phụ lục.
+          </div>
+          <div class="file" data-editable="true" contenteditable="false">
+            <strong>R-7208001...(運用監視機能).doc</strong>
+            Tài liệu monitoring chính.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="footer">
+      <div class="mini" data-editable="true" contenteditable="false">
+        <h4 data-editable="true" contenteditable="false">Thứ tự đọc khuyến nghị</h4>
+        <ul>
+          <li data-editable="true" contenteditable="false">Ngày 1: đọc Overview + 方式設計書 + 機能変更対応マトリクス</li>
+          <li data-editable="true" contenteditable="false">Ngày 2: đọc DB仕様 + CRUD + 状態遷移 + アカウント状態整理</li>
+          <li data-editable="true" contenteditable="false">Sau đó chọn nhánh IK / IR / Batch theo assignment</li>
+        </ul>
+      </div>
+      <div class="mini" data-editable="true" contenteditable="false">
+        <h4 data-editable="true" contenteditable="false">Khi gặp câu hỏi thực tế</h4>
+        <ul>
+          <li data-editable="true" contenteditable="false">Muốn hiểu business scope: mở overview và matrix</li>
+          <li data-editable="true" contenteditable="false">Muốn hiểu dữ liệu/state: mở DB仕様, CRUD, 状態遷移</li>
+          <li data-editable="true" contenteditable="false">Muốn debug logic cụ thể: mở function detail + pattern matrix</li>
+        </ul>
+      </div>
+      <div class="mini" data-editable="true" contenteditable="false">
+        <h4 data-editable="true" contenteditable="false">Lưu ý cho member mới</h4>
+        <ul>
+          <li data-editable="true" contenteditable="false">File input này là bản đồ tài liệu, không phải tài liệu nghiệp vụ cuối</li>
+          <li data-editable="true" contenteditable="false">Đừng bỏ qua tài liệu common giữa IK và IR</li>
+          <li data-editable="true" contenteditable="false">Phải phân biệt setting trước/sau production switch</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+
+  <script>
+    (function () {
+      const STORAGE_KEY = 'so_do_mapping_tai_lieu_onboarding_editable_v2';
+      const root = document.documentElement;
+      const btn = document.getElementById('toggleEditBtn');
+      const modeLabel = document.getElementById('modeLabel');
+      const editableNodes = Array.from(document.querySelectorAll('[data-editable="true"]'));
+
+      function setEditMode(enabled) {
+        root.classList.toggle('editable-on', enabled);
+        editableNodes.forEach(node => node.setAttribute('contenteditable', enabled ? 'true' : 'false'));
+        btn.classList.toggle('active', enabled);
+        btn.textContent = enabled ? 'Tắt chỉnh sửa' : 'Bật chỉnh sửa';
+        btn.setAttribute('aria-pressed', enabled ? 'true' : 'false');
+        modeLabel.textContent = enabled ? 'Chế độ chỉnh sửa' : 'Chế độ xem';
+      }
+
+      function saveContent() {
+        const data = editableNodes.map((node, index) => ({ index, html: node.innerHTML }));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      }
+
+      function restoreContent() {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        try {
+          const data = JSON.parse(raw);
+          data.forEach(item => {
+            if (editableNodes[item.index]) editableNodes[item.index].innerHTML = item.html;
+          });
+        } catch (e) {
+          console.warn('Không thể khôi phục dữ liệu đã lưu.', e);
+        }
+      }
+
+      restoreContent();
+      setEditMode(false);
+
+      btn.addEventListener('click', function () {
+        const enabled = btn.getAttribute('aria-pressed') !== 'true';
+        setEditMode(enabled);
+      });
+
+      let timer;
+      editableNodes.forEach(node => {
+        node.addEventListener('input', function () {
+          clearTimeout(timer);
+          timer = setTimeout(saveContent, 300);
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>
